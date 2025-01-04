@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+struct Pengeluaran {
+    std::string kategori;
+    double jumlah;
+};
+
+int main() {
+    double saldoAwal, sisaSaldo, totalPengeluaran = 0;
+    std::vector<Pengeluaran> daftarPengeluaran;
+    int pilihan;
+
+    // Meminta saldo awal dari pengguna
+    std::cout << "Selamat datang di aplikasi KeuanganHarian!\n";
+    std::cout << "Masukkan saldo awal Anda: ";
+    std::cin >> saldoAwal;
+    sisaSaldo = saldoAwal;
+
+    do {
+        // Menampilkan menu utama
+        std::cout << "\nMenu Utama:\n";
+        std::cout << "1. Tambah Pengeluaran\n";
+        std::cout << "2. Tampilkan Total Pengeluaran\n";
+        std::cout << "3. Tampilkan Sisa Saldo\n";
+        std::cout << "4. Keluar dari Aplikasi\n";
+        std::cout << "Pilih opsi (1-4): ";
+        std::cin >> pilihan;
+
+        switch (pilihan) {
+            case 1: {
+                // Tambah pengeluaran
+                Pengeluaran pengeluaranBaru;
+                std::cout << "\nMasukkan kategori pengeluaran: ";
+                std::cin.ignore(); // Membersihkan buffer input
+                std::getline(std::cin, pengeluaranBaru.kategori);
+                std::cout << "Masukkan jumlah pengeluaran: ";
+                std::cin >> pengeluaranBaru.jumlah;
+
+                if (pengeluaranBaru.jumlah > sisaSaldo) {
+                    std::cout << "Saldo tidak mencukupi untuk pengeluaran ini.\n";
+                } else {
+                    daftarPengeluaran.push_back(pengeluaranBaru);
+                    totalPengeluaran += pengeluaranBaru.jumlah;
+                    sisaSaldo -= pengeluaranBaru.jumlah;
+                    std::cout << "Pengeluaran berhasil ditambahkan.\n";
+                }
+                break;
+            }
+            case 2:
+                // Tampilkan total pengeluaran
+                std::cout << "\nTotal Pengeluaran: " << totalPengeluaran << "\n";
+                break;
+
+            case 3:
+                // Tampilkan sisa saldo
+                std::cout << "\nSisa Saldo: " << sisaSaldo << "\n";
+                break;
+
+            case 4:
+                // Keluar dari aplikasi
+                std::cout << "\nTerima kasih telah menggunakan aplikasi KeuanganHarian. Selamat tinggal!\n";
+                break;
+
+            default:
+                std::cout << "Pilihan tidak valid. Silakan coba lagi.\n";
+                break;
+        }
+    } while (pilihan != 4);
+
+    return 0;
+}
